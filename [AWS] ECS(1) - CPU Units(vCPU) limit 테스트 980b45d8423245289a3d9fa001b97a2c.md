@@ -17,8 +17,7 @@
 ---
 
 ECS에서 docker 환경을 빠르게 구성해주기는 하지만, 컨테이너가 실행될 기반이 되는 이미지가 필요합니다. 또한 이들 이미지가 저장될 이미지 저장소가 필요하죠. ECS 사용을 위해 별도로 이미지 저장소를 구성할 필요 없이 AWS에서는 ECR(Elastic Conatiner Registry)을 통해서 이미지 저장소를 제공합니다.
-
-![./image/Untitled.png](./image/Untitled.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled.png?raw=true)
 
 이미지 레지스트리를 생성하면 이미지를 업로드 할 수 있는 docker 커맨드를 제공합니다. EC2를 이용하여 ECS 클러스터를 생성하였다면 인스턴스에서 위의 커맨드를 입력하여 이미지 빌드 및 업로드가 가능합니다.
 
@@ -32,11 +31,11 @@ ECS를 사용하면 컨테이너를 실행하기 위해 서버를 구성하고 d
 
 ---
 
-![./image/Untitled%201.png](./image/Untitled%201.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%201.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%201.png?raw=true)
 
 ## 클러스터
 
-![./image/Untitled%202.png](./image/Untitled%202.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%202.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%202.png?raw=true)
 
 ECS 클러스터는 작업과 서비스가 존재하는 논리적 공간입니다. 클러스터가 생성되면 지정한 타입의 EC2 인스턴스가 컨테이너 인스턴스로서 실행되어 Task Definition에 의해 서비스 단위로 컨테이너가 올라올 수 있는 환경이 마련됩니다.
 
@@ -82,7 +81,7 @@ ECS 클러스터 생성시 함께 생성되며, 서비스에 의해 Task가 배�
 
 ---
 
-![./image/Untitled%203.png](./image/Untitled%203.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%203.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%203.png?raw=true)
 
 TASK definition에서 container 당 10vCPU까지밖에 할당할 수 없다고 하는데, 실제로 그러한지 확인해보겠습니다. 테스트 방법은 다음과 같습니다.
 
@@ -97,65 +96,65 @@ FROM centos:latest
 CMD tail -f /dev/null
 ```
 
-![./image/Untitled%204.png](./image/Untitled%204.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%204.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%204.png?raw=true)
 
-![./image/Untitled%205.png](./image/Untitled%205.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%205.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%205.png?raw=true)
 
 EC2 유형으로는 다른 테스트 목적으로 활용중이던 g4dn.12xlarge 타입을 재활용 했습니다. 반드시 이 유형을 사용할 필요는 없습니다.
 
 Task definition에서 CPU Units을 10240으로 제한하였을 때
 
-![./image/Untitled%206.png](./image/Untitled%206.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%206.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%206.png?raw=true)
 
 컨테이너가 인식하는 코어 수 확인
 
-![./image/Untitled%207.png](./image/Untitled%207.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%207.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%207.png?raw=true)
 
 모든 코어(48개) 사용
 
-![./image/Untitled%208.png](./image/Untitled%208.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%208.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%208.png?raw=true)
 
 컨테이너 내부적으로는 모든 코어를 사용하는 것으로 인식하나, 실제 호스트에는 10vCPU의 제한이 걸려있으므로 CPU 사용률이 1000%까지만 찍힙니다.
 
-![./image/Untitled%209.png](./image/Untitled%209.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%209.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%209.png?raw=true)
 
 이번엔 코어를 절반인 24개만 사용하겠습니다.
 
-![./image/Untitled%2010.png](./image/Untitled%2010.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2010.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2010.png?raw=true)
 
 이 역시 10vCPU를 넘어서기 때문에 호스트에서는 1000%가 최대 사용률입니다.
 
-![./image/Untitled%2011.png](./image/Untitled%2011.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2011.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2011.png?raw=true)
 
-![./image/Untitled%2012.png](./image/Untitled%2012.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2012.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2012.png?raw=true)
 
 12 core를 사용해도 마찬가지입니다.
 
-![./image/Untitled%2013.png](./image/Untitled%2013.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2013.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2013.png?raw=true)
 
 10vCPU보다 적은 6개 코어 사용하는 경우는?
 
-![./image/Untitled%2014.png](./image/Untitled%2014.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2014.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2014.png?raw=true)
 
 호스트의 6개 코어가 동작해서 600%가 찍힘을 확인할 수 있습니다.
 
-![./image/Untitled%2015.png](./image/Untitled%2015.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2015.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2015.png?raw=true)
 
 10개 코어를 모두 사용하는경우
 
-![./image/Untitled%2016.png](./image/Untitled%2016.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2016.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2016.png?raw=true)
 
 마찬가지로 1000%가 찍힙니다.
 
 CPU Units에 아무 값도 입력하지 않았을 때(최대 할당)
 
-![./image/Untitled%2017.png](./image/Untitled%2017.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2017.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2017.png?raw=true)
 
-![./image/Untitled%2018.png](./image/Untitled%2018.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2018.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2018.png?raw=true)
 
-![./image/Untitled%2019.png](./image/Untitled%2019.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2019.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2019.png?raw=true)
 
-![./image/Untitled%2020.png](./image/Untitled%2020.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2020.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2020.png?raw=true)
 
 신기하게도 48개 코어는 4800%, 24개 코어는 2400%가 찍힙니다. AWS 공식 문서에서는 10vCPU(10240 Units)가 최대 값으로 설명되어 있는데, 실제로 테스트 해 본 결과 아무 값도 입력하지 않으면 컨테이너 인스턴스(host)가 가진 모든 자원을 활용할 수 있었습니다.
 
@@ -163,7 +162,7 @@ CPU Units에 아무 값도 입력하지 않았을 때(최대 할당)
 
 ---
 
-![./image/Untitled%2021.png](./image/Untitled%2021.png)
+![https://github.com/taeknical/tistory/blob/main/image/Untitled%2021.png?raw=true](https://github.com/taeknical/tistory/blob/main/image/Untitled%2021.png?raw=true)
 
 Task Definition의 CPU Units는 초과 가능하다.
 
