@@ -187,7 +187,7 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: /vagrant => C:/Users/isnt/KANS
 ```
 
-![[https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107142405.png?raw=true]]
+![https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107142405.png?raw=true]
 
 구성이 완료되면 위와 같이 VirtualBox 에서 새로운 환경이 구성되었음을 확인할 수 있다.
 
@@ -439,7 +439,7 @@ PS C:\Users\isnt\KANS> vagrant halt
 ==> k8s-m: Forcing shutdown of VM...
 ```
 
-![[https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107132242.png?raw=true]]
+![https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107132242.png?raw=true]
 
 ```shell
 PS C:\Users\isnt\KANS> vagrant reload
