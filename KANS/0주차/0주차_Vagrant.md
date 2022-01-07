@@ -135,7 +135,8 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-주석처리된 라인을 제외하고 보면 간단하다.
+주석처리된 라인을 제외하고 보면 간단하다
+
 ```shell
 Vagrant.configure("2") do |config|
   config.vm.box = "hashicorp/bionic64"
@@ -192,6 +193,7 @@ Bringing machine 'default' up with 'virtualbox' provider...
 
 #### vagrant status
 - vagrant up 실행 전
+
 ```shell
 PS C:\Users\isnt\KANS> vagrant status
 Current machine states:
@@ -374,9 +376,10 @@ Download redirected to host: cloud-images.ubuntu.com
 PS C:\Users\isnt\KANS>
 ```
 
-## 2-2. 구축 확인
+## 2-3. 구축 확인
 - 구성이 완료된 후 vagrant status로 master node 1개, worker node 2개가 구성되었는지 확인
 - vagrant ssh로 마스터노드에 접속하여 kubectl get node 실행하여 모든 k8s 노드가 조회되는지 확인
+
 ```shell
 PS C:\Users\isnt\KANS> vagrant status
 Current machine states:

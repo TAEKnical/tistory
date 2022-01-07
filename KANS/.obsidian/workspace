@@ -1,0 +1,93 @@
+{
+  "main": {
+    "id": "6f577716970e9cfe",
+    "type": "split",
+    "children": [
+      {
+        "id": "d96ab6fe639306d6",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "0주차/0주차_Vagrant.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7536b2ae7a9d73dd",
+    "type": "split",
+    "children": [
+      {
+        "id": "e65c312d417fc6cb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a7792740c24bb80c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "a57ee1dd25031f4a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ccacb3ae258c9d9b",
+    "type": "split",
+    "children": [
+      {
+        "id": "cacc2e9b741dbdc4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7e737f43fcab0d9d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "0주차/0주차_Vagrant.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "d96ab6fe639306d6",
+  "lastOpenFiles": [
+    "0주차/0주차_Vagrant.md"
+  ]
+}
