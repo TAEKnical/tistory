@@ -439,7 +439,7 @@ PS C:\Users\isnt\KANS> vagrant halt
 ==> k8s-m: Forcing shutdown of VM...
 ```
 
-!(image2)[https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107132242.png?raw=true]
+![image2](https://github.com/TAEKnical/tistory/blob/main/KANS/0%EC%A3%BC%EC%B0%A8/Pasted%20image%2020220107132242.png?raw=true)
 
 ```shell
 PS C:\Users\isnt\KANS> vagrant reload
