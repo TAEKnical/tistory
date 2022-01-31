@@ -4,14 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d96ab6fe639306d6",
+        "id": "f930bc25f8e69708",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "0주차/0주차_Vagrant.md",
-            "mode": "source"
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -48,11 +45,13 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "ccacb3ae258c9d9b",
@@ -68,7 +67,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0주차/0주차_Vagrant.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -83,11 +81,11 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
-  "active": "d96ab6fe639306d6",
+  "active": "f930bc25f8e69708",
   "lastOpenFiles": [
+    "Untitled.md",
     "0주차/0주차_Vagrant.md"
   ]
 }

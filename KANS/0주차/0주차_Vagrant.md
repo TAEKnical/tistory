@@ -18,7 +18,7 @@
 
 실습 환경에서는 Vagrant를 이용하여 VirtualBox 기반의 가상 환경에서 k8s 클러스터를 구축할 것이므로 OS 환경에 맞는 VirtualBox를 설치한다.
 
-[VirtualBox 설치페이지](https://www.virtualbox.org/wiki/Downloads
+[VirtualBox 설치페이지](https://www.virtualbox.org/wiki/Downloads)
 
 ### 1-2-2. Vagrant 설치
 Vagrant의 최신 버전을 설치한다.
