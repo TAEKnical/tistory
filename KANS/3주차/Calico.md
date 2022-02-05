@@ -3,7 +3,8 @@
 \*개인이 학습 간에 작성한 내용이므로, 잘못된 내용은 댓글/피드백 부탁드립니다.
 
 **수정내역**
-\*22.02.06 가시다님 피드백으로 calico network policy에 대해서 간단하게 내용 추가
+\*22.02.05 이미지 링크 변경
+\*22.02.06 가시다님 피드백으로 calico network policy에 대해서 내용 추가
 
 3주차에 진행했던 calico에 대한 내용 이해에 어려움을 겪은 바..calico의 기본 개념을 정리하고자 함.
 
@@ -34,7 +35,7 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 
 ## 2. Calico Component
 ---
-![calico component architecture](https://projectcalico.docs.tigera.io/reference/architecture/overview)
+![Pasted image 20220206002737.png](./images/Pasted image 20220206002737.png)
 공식 문서에서 확인할 수 있는 calico component의 architecture이다. 먼저 calico를 구성하는 요소들을 살펴보고자 한다.
 마스터노드를 포함한 각 노드에 데몬셋으로 calico-node 파드가 배치되어 felix, bird, confd 등이 동작하며, calico controller파드는 deployment로 배치된다.
 
@@ -241,7 +242,7 @@ default-ipv4-ippool   172.16.0.0/16   true   Always     Never       false      f
 NAT가 true -> 호스트에서 masquerading 하도록 되어있다
 보안상 network 팀이 관리하는 방화벽 쪽으로 보내서 외부와 통신하도록 할 수도 있음. 보안상 외부와 통신하면 안되는 pod를 구분해서 관리하는 용도로도 사용 가능.
 
-![Pasted image 20220204013306.png](./images/20220204013306.png)
+![Pasted image 20220204013306.png](./images/Pasted image 20220204013306.png)
 서로 다른 노드의 파드 통신의 경우
 tunl(tunnel) 인터페이스를 통해 빠져나가면서 overlay 헤더가 추가되어 상대 노드 tunl에 도착하면 outer 헤더를 벗겨내고 실제 pod의 네트워크 대역 정보로 통신이 이루어짐
 
