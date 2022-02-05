@@ -44,6 +44,7 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 
 - Felix : 각 노드에 할당된  pod의 IP 대역이 BGP로 전파되면 그 대역과 정상적으로 통신이 이루어질 수 있도록 iptables와 라우팅테이블 등을 조정한다.
 - BIRD : Bird는 오픈소스 라우팅 데몬 프로그램이다. calico pod 안 에서 프로세스로 동작하며 각 노드의 pod 정보를 BIRD가 전파하고, 전파 받는다.
+
 ![Pasted image 20220203225424.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220203225424.png?raw=true)
 
 노드마다 Bird가 있고, wireshark로  확인해보면 172.16.197.0/26이 현재 Bird가 있는 노드의 pod 대역이라고 광고하는 것. 그럼 상대방 노드의 Bird는 저 노드랑 통신하기 위해 route table에 추가함.
