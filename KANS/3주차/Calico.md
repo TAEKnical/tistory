@@ -37,7 +37,7 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 
 ## 2. Calico Component
 ---
-![Pasted image 20220206002737.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220206002737.png?raw=true)
+![Pasted image 20220206002737.png](https://projectcalico.docs.tigera.io/images/architecture-calico.svg)
 
 공식 문서에서 확인할 수 있는 calico component의 architecture이다. 먼저 calico를 구성하는 요소들을 살펴보고자 한다.
 마스터노드를 포함한 각 노드에 데몬셋으로 calico-node 파드가 배치되어 felix, bird, confd 등이 동작하며, calico controller파드는 deployment로 배치된다.
