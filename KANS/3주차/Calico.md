@@ -11,7 +11,9 @@
 ## 1. 쿠버네티스 CNI(Container Network Interface)
 ---
 calico에 대해서 이해하기 전에 먼저 CNI가 무엇인지 알아야 할 필요가 있다.
+
 \[[공식문서 - 클러스터 네트워킹](https://kubernetes.io/ko/docs/concepts/cluster-administration/networking/)\]
+
 쿠버네티스 네트워크 환경을 구성해주는 것을 CNI add on이라고 한다. 공식적으로 k8s CNI는 k8s의 core component에 속하지 않기에 add on으로 분류되며, CNI는 컨테이너의 네트워크 문제에만 관여하기 때문에 그 외의 요소에는 별도의 제한이 없다. 때문에 공식 문서만 해도 엄청나게 많은 CNI 3rd-party 프로젝트를 소개하고 있으며 이들 간의 특징이 각각 다르다. CNI는 컨테이너의 netns를 세팅하고, 호스트의 bridge와 컨테이너 사이에 veth를 연결하여 각 네트워크 인터페이스마다 대역에 맞는 IP를 할당하는 작업을 수행한다. 이 내용이 1주차에 수행했던 실습 내용인데, 결국 CNI는 반드시 k8s가 아닌 다른 런타임에서도 동일하게 동작할 수 있다는 이야기가 된다.
 
 *찾아보니 CNI는 애초에 쿠버네티스에 종속된 플러그인이 아니라 CNCF(Cloud Native Computing Foundation) 프로젝트임.
@@ -35,13 +37,15 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 
 ## 2. Calico Component
 ---
-![Pasted image 20220206002737.png](./images/Pasted image 20220206002737.png)
+![Pasted image 20220206002737.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220206002737.png?raw=true)
+
 공식 문서에서 확인할 수 있는 calico component의 architecture이다. 먼저 calico를 구성하는 요소들을 살펴보고자 한다.
 마스터노드를 포함한 각 노드에 데몬셋으로 calico-node 파드가 배치되어 felix, bird, confd 등이 동작하며, calico controller파드는 deployment로 배치된다.
 
 - Felix : 각 노드에 할당된  pod의 IP 대역이 BGP로 전파되면 그 대역과 정상적으로 통신이 이루어질 수 있도록 iptables와 라우팅테이블 등을 조정한다.
 - BIRD : Bird는 오픈소스 라우팅 데몬 프로그램이다. calico pod 안 에서 프로세스로 동작하며 각 노드의 pod 정보를 BIRD가 전파하고, 전파 받는다.
-![Pasted image 20220203225424.png](./images/Pasted image 20220203225424.png)
+![Pasted image 20220203225424.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220203225424.png?raw=true)
+
 노드마다 Bird가 있고, wireshark로  확인해보면 172.16.197.0/26이 현재 Bird가 있는 노드의 pod 대역이라고 광고하는 것. 그럼 상대방 노드의 Bird는 저 노드랑 통신하기 위해 route table에 추가함.
 
 - Datastore plugin: calico에서 사용되는 여러가지 정보들이 업데이트 된다. 예전에는 etcd를 썼는데 최근에는 k8s api datastore(kdd)에 많이 저장함. 굳이 민감한 저장소를 사용할 필요 없이 경량의 가벼운 저장소를 사용하는 추세.
@@ -50,12 +54,13 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 
 - Calico IPAM plugin : 각 노드별로 사용할 pod의 대역을 직접 엔지니어가 설정하고, 대역이 모자르는 등의 상황이 발생하면 매우 골치아픈 상황이 발생할 수 있다. calico는 자체 IP관리 기능인 IPAM을 제공함으로써 파드에 할당될 대역을 적절하게 지정해주는 역할을 한다.
 
-![Pasted image 20220203203144.png](./Pasted image 20220203203144.png)
+![Pasted image 20220203203144.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220203203144.png?raw=true)
 
 *BGP?
 스위치나 라우터 등의 네트워크 장비에서 통신하기 위한 상대의 ip 대역을 전파하기 위해 사용되는 프로토콜. Calico에서 BGP로 대역을 전파한다는 것은 네트워크 팀에서 다루는 물리적인 라우터 장비하고도 연결 가능하다는 의미임. 2주차에 학습했던 Flannel CNI에서는 자기들끼리만 vxlan으로 연결하기 떄문에 이런게 불가능했음.
 
-![통신방식](./images/Pasted image 20220205231215.png)
+![통신방식](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220205231215.png?raw=true)
+
 출처 : 가시다님 노션
 
 이렇게 전달받은 정보를 리눅스 라우팅 테이블에 추가하는 것은 Felix가 수행하고, 상대방 노드의 pod 대역을 BGP프로토콜로 bird를 통해 전달받아서 라우팅 테이블과  iptable 룰을 조정한다.
@@ -227,7 +232,9 @@ iptables -t nat -S | grep cali
 ```
 
 도커 네트워킹에서는 동일 노드 내에서 컨테이너가 bridge를 두고 통신을 했었는데, calico는 파드와 파드 사이에 어떻게 통신할까?
-![Pasted image 20220204004020.png](./images/20220204004020.png)
+
+![Pasted image 20220204004020.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220204004020.png?raw=true)
+
 결론적으로는 유사한 부분이 있다. host에는 veth로 연결된 calice라는 인터페이스가 생성되어서 바로 통신 가능하며, 이 때 host net ns를 거치기 때문에 host에서는 iptables의 forwarding rule에 허용이 되어있어야 함.
 
 *proxy arp
@@ -242,7 +249,8 @@ default-ipv4-ippool   172.16.0.0/16   true   Always     Never       false      f
 NAT가 true -> 호스트에서 masquerading 하도록 되어있다
 보안상 network 팀이 관리하는 방화벽 쪽으로 보내서 외부와 통신하도록 할 수도 있음. 보안상 외부와 통신하면 안되는 pod를 구분해서 관리하는 용도로도 사용 가능.
 
-![Pasted image 20220204013306.png](./images/Pasted image 20220204013306.png)
+![Pasted image 20220204013306.png](https://github.com/TAEKnical/tistory/blob/main/KANS/3%EC%A3%BC%EC%B0%A8/images/Pasted%20image%2020220204013306.png?raw=true)
+
 서로 다른 노드의 파드 통신의 경우
 tunl(tunnel) 인터페이스를 통해 빠져나가면서 overlay 헤더가 추가되어 상대 노드 tunl에 도착하면 outer 헤더를 벗겨내고 실제 pod의 네트워크 대역 정보로 통신이 이루어짐
 
