@@ -21,6 +21,7 @@ calico에 대해서 이해하기 전에 먼저 CNI가 무엇인지 알아야 할
 k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 네트워크 문제를 해결해야 한다.
 
 ### 1-1. k8s CNI가 해결해야 하는 4가지 네트워크 문제
+---
 \1. 파드<-> 파드 간 NAT 없이 통신 가능해야 한다.
 \2. 파드<->서비스 간 통신 가능해야 한다.
 \3. 외부<->서비스 간 통신 가능해야 한다.
@@ -29,6 +30,7 @@ k8s CNI의 공식 명세의 최상단에도 적혀있지만, k8s CNI는 4가지 
 이러한 문제를 해결함으로써, CNI에 의한 k8s 클러스터의 네트워크는 다음과 같은 기준 하에 동작해야 한다.
 
 ### 1-2. k8s 네트워크의 동작 기준
+---
 \1. 노드가 달라도 Pod to Pod간 NAT없이 통신 가능해야 한다.
 \2. 노드의 에이전트(system daemons, kubelet)는 해당 노드의 모든 파드와 통신 가능해야 한다.
 \3. 노드의 host network에 있는 파드는 NAT 없이 모든 노드의 파드와 통신 가능해야 한다.
@@ -265,9 +267,11 @@ kt gcloud도 안됨.
 ## 3. Calico Mode
 ---
 ### 3-1. IPIP
+---
 원본 패킷이 상대 노드의 파드와 통신할 때 outer 패킷(IPIP overlay)을 사용해서 통신
 
 ### 3-2. Direct
+---
 성능은 20%정도 IPIP보다 뛰어남. overlay 없이 파드의 패킷이 그대로 상대 노드에 전달됨
 모니터링 할 때 Pod IP도 직접 보임
 환경만 가능하다면 Direct 모드를 쓰는게 성능, 관리면에서 좋음
@@ -278,22 +282,26 @@ eni의 MAC이 아닌 pod 내부의 네트워크 인터페이스의 MAC이 통과
 virtual box의 경우 무작위모드를 모두 허용 하면 됨
 
 ## 3-3. CrossSubnet
+---
 같은 네트워크 대역의 노드는 Direct 모드로, 다른 대역의 노드는 IPIP 모드로 동작하도록 함
 
 
 ### 3-4. VXLAN
+---
 Outer가 VXLAN 임
 단, Calico 에서 VXLAN 사용하면 BGP 불가능
 Calico에서 BGP를 사용한다고 하면 IPIP 또는 Direct를 사용해야 network 팀 장비와 BGP 연동이 가능함.
 VXLAN은 BGP를 반드시 disable 해야 함
 
 ### 3-5. Pod 패킷 암호화
+---
 어플리케이션 레벨이 아닌 보안적, 법적인 규제 때문에 서로 다른 노드의 파드가 통신할 때 network 레벨의 암호화가 필요한 경우가 있음
 wireg 기능을 쓰면 통신 트래픽이 암호화되어 상대방 노드와 통신 가능해짐
 
 ## 4. Calico Network Policy
 ---
 ### 4-1. 개요
+---
 [공식 문서 - Calico Network policy](https://projectcalico.docs.tigera.io/security/calico-network-policy)
 
 k8s는 L3,L4의 네트워크 트래픽 제어를 network policy 라는 k8s 오브젝트를 정의함으로써 수행하며, cni를 이용하여 k8s네트워크를 구성한 경우 network policy를 제공하는 네트워크 플러그인을 사용해야 한다.
@@ -304,22 +312,24 @@ k8s는 L3,L4의 네트워크 트래픽 제어를 network policy 라는 k8s 오�
 (이 부분은 istio와 연계학습 후 포스팅하기로..)
 
 ### 4-2. Calico network policy 지원 범위
+---
 - 적용 가능한 endpoint : 파드, 컨테이너, 가상머신, 호스트 인터페이스
 - ingress, egress를 각각 정의하며 둘다 정의할 수도 있음
 - Action : allow, deny, pass, log(syslog에 connection log를 남김)
 - Source and destination match criteria:
-		Ports: numbered, ports in a range, and Kubernetes named ports
-		Protocols: TCP, UDP, ICMP, SCTP, UDPlite, ICMPv6, protocol numbers (1-255)
-		HTTP attributes (if using Istio service mesh)
-		ICMP attributes
-		IP version (IPv4, IPv6)
-		IP or CIDR
-		Endpoint selectors (using label expression to select pods, VMs, host interfaces, and/or network sets)
-		Namespace selectors
-		Service account selectors
+	- Ports: numbered, ports in a range, and Kubernetes named ports
+	- Protocols: TCP, UDP, ICMP, SCTP, UDPlite, ICMPv6, protocol numbers (1-255)
+	- HTTP attributes (if using Istio service mesh)
+	- ICMP attributes
+	- IP version (IPv4, IPv6)
+	- IP or CIDR
+	- Endpoint selectors (using label expression to select pods, VMs, host interfaces, and/or network sets)
+	- Namespace selectors
+	- Service account selectors
 
 
 ### 4-3. Calico Endpoints
+---
 calico는 두 가지 유형의 endpoint를 구분하여 network policy를 적용한다.
 - workload endpoint : k8s pod, openstack vm이 해당
 - host endpoint : 호스트의 네트워크 인터페이스
@@ -351,9 +361,11 @@ calicoctl get globalnetworkpolicy
 ```
 
 ### 4-4. ingress & egress
+---
 하나의 network policy에는 ingress와 egress가 각각 정의될 수 있다.
 
 ### 4-5. Behavior
+---
 - pod에 network policy가 정의되지 않으면 default로 모든 source에 대하여 모든 트래픽을 허용한다.
 - ingress 규칙이 정의된 network policy가 하나라도 pod에 적용된 경우, 명시적으로 허용된 ingress 트래픽만을 허용한다.
 - egress도 마찬가지로, 하나라도 적용되는 경우 명시적으로 허용된 egress 트래픽만 통과할 수 있다.
@@ -363,6 +375,7 @@ calicoctl get globalnetworkpolicy
 간단한 데모를 통해 calico network policy를 테스트해보고자 한다.
 
 ### 5-1. 통신 확인
+---
 ```bash
 kubectl create ns advanced-policy-demo
 kubectl create deployment --namespace=advanced-policy-demo nginx --image=nginx
@@ -392,6 +405,7 @@ wget -q --timeout=5 google.com -O -
 busybox 파드 내부의 쉘에 연결되면 nginx와 google.com에 대한 접근을 테스트해서 html 응답이 떨어지면 된다.
 
 ### 5-2. 모든 트래픽 차단(global network policy)
+---
 non-namespaced resource인 GlobalNetworkPolicy를 사용하여 selector와 일치하는 모든 파드에 network policy를 적용한다. 기존 k8s network policy를 이용하는 경우 네임스페이스별로 deny 정책을 만들어서 적용해주어야 한다. 단, 본 예시에서는 kube-system 네임스페이스의 파드는 GlobalNetworkPolicy의 영향을 받지 않도록 제외한다.
 
 \*실제 운영환경에서는 k8s 클러스터의 동작에 영향을 주지 않도록 GlobalNetworkPolicy 적용 전에 반드시 검토가 필요할 듯 함.
@@ -430,6 +444,7 @@ wget: bad address 'google.com'
 ```
 
 ### 5-3. 모든 egress 트래픽 허용
+---
 
 ```bash
 $ calicoctl create -f - <<EOF
@@ -452,6 +467,7 @@ busybox에서 모든 아웃바운드 트래픽을 명시적으로 허용한다. 
 그러나 여전히 nginx 로부터는 응답을 받지 못하고 있다. 왜일까?
 
 ### 5-4.  nginx에 대한 인그레스 트래픽 허용
+---
 busybox 파드에서 나가는 아웃바운드 트래픽은 허용이 되었으나, 앞서 적용된 nginx 파드의 ingress 거부 정책이 아직 유효하기 때문이다.
 
 ```bash
