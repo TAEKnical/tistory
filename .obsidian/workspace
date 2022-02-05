@@ -1,0 +1,102 @@
+{
+  "main": {
+    "id": "9add4a57e0f5517a",
+    "type": "split",
+    "children": [
+      {
+        "id": "e3dc8cab5269e5c0",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "KANS/3주차/Calico.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0e2b89fd78becd57",
+    "type": "split",
+    "children": [
+      {
+        "id": "0729998d2fb0b8bd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "688a9707de87f623",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "70bd8bdf5cd4999b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 328
+  },
+  "right": {
+    "id": "c595fc2856ec708e",
+    "type": "split",
+    "children": [
+      {
+        "id": "316537fae8aceafc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "be5265ba7b47fa44",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "KANS/3주차/Calico.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "e3dc8cab5269e5c0",
+  "lastOpenFiles": [
+    "KANS/3주차/Calico.md",
+    "KANS/2주차/K8S Flannel & PAUSE.md",
+    "KANS/2주차/K8S 아키텍처.md",
+    "KANS/2주차/K8S 업데이트.md",
+    "KANS/Untitled.md",
+    "KANS/1주차/컨테이너 격리 & 도커 네트워크.md",
+    "KANS/1주차/컨테이너 격리 & 도커 네트워크2.md",
+    "KANS/1주차/컨테2.md",
+    "KANS/0주차/0주차_Vagrant.md",
+    "KANS/0주차/Pasted image 20220107132242.png"
+  ]
+}
